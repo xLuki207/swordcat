@@ -32,7 +32,7 @@ export function Creator({ data }: { data: CreatorData }) {
               <img src={data.avatarUrl} alt="" width={44} height={44} className={s.avatar} referrerPolicy="no-referrer" loading="lazy" />
             )}
             <div>
-              {data.name && <p className={s.name}>{data.name}</p>}
+              <p className={s.name}>{data.name ?? 'On Instagram'}</p>
               {data.bio && <p className={s.bio}>&ldquo;{data.bio}&rdquo;</p>}
             </div>
           </div>
