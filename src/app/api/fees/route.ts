@@ -6,5 +6,5 @@ export const maxDuration = 30;
 
 export async function GET() {
   const r = await settle(getFees());
-  return cachedJson(r, r.data ? 60 : 10, 300, r.data ? 200 : 503);
+  return cachedJson(r, r.data ? 20 : 10, 300, r.data ? 200 : 503);
 }

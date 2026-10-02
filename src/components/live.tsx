@@ -3,8 +3,8 @@
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import type { CreatorFeeData, Loaded, TokenMarketData } from '@/lib/types';
 
-export const MARKET_EVERY = 20_000;
-const FEES_EVERY = 60_000;
+export const MARKET_EVERY = 15_000;
+export const FEES_EVERY = 30_000;
 
 type Feed<T> = {
   data: T | null;
@@ -59,8 +59,9 @@ function usePoll<T>(url: string, every: number, initial: Loaded<T>, initialAt: n
       }
     };
 
-    // Server-rendered data is fresh; only fetch at once when the server had none.
-    if (!initial.data) tick();
+    // The page is cached HTML (ISR): its numbers can be older than one cycle.
+    // Fetch at once unless they are fresh.
+    if (!initial.data || Date.now() - initialAt > every) tick();
     else schedule();
     document.addEventListener('visibilitychange', onVisible);
     return () => {
@@ -95,6 +96,19 @@ export function useLive(): Live {
   const v = useContext(Ctx);
   if (!v) throw new Error('useLive outside LiveProvider');
   return v;
+}
+
+export type Freshness = 'live' | 'stale' | 'down';
+
+/**
+ * Honest status for a feed: 'live' only while the last good payload is
+ * younger than 2.5 refresh cycles and the last refresh did not fail.
+ */
+export function freshness<T>(feed: Feed<T>, every: number, now: number | null): Freshness {
+  if (!feed.data) return 'down';
+  if (feed.error) return 'stale';
+  if (now != null && now - feed.receivedAt > every * 2.5) return 'stale';
+  return 'live';
 }
 
 /** Ticks once a second, for "updated 8s ago" labels. Starts after mount to avoid hydration drift. */

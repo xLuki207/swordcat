@@ -4,7 +4,6 @@ import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 import { LINKS } from '@/lib/config';
 import { CopyMint } from './CopyMint';
-import { ArrowRight, ChartIcon } from './icons';
 import { LiveStrip } from './LiveStrip';
 import s from './Hero.module.css';
 
@@ -89,11 +88,9 @@ export function Hero() {
           </p>
           <div className={s.actions}>
             <a className="btn btn-primary" href={LINKS.pump} target="_blank" rel="noopener noreferrer">
-              Open on Pump.fun
-              <ArrowRight size={17} />
+              Open Pump.fun
             </a>
             <a className="btn" href={LINKS.dexscreener} target="_blank" rel="noopener noreferrer">
-              <ChartIcon size={17} />
               Chart
             </a>
           </div>
@@ -108,10 +105,11 @@ export function Hero() {
               <Image
                 src="/art/catana.webp"
                 alt="Sword Cat: a tabby kitten with a pink bow, standing on its hind legs, holding a katana"
-                width={704}
-                height={1209}
+                width={1408}
+                height={2418}
                 priority
-                sizes="(max-width: 720px) 62vw, 420px"
+                quality={90}
+                sizes="(max-width: 720px) 70vw, (max-width: 1080px) 360px, 440px"
                 className={s.cat}
               />
               <span className={s.glint} aria-hidden />

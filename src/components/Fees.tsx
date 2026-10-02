@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import { FEES, shortAddress, solscanAccount, solscanTx } from '@/lib/config';
-import { sol, stamp, toSol, usd } from '@/lib/format';
+import { ago, sol, stamp, toSol, usd } from '@/lib/format';
 import { AnimatedValue } from './AnimatedValue';
 import { ArrowUpRight, ShareIcon } from './icons';
-import { useLive } from './live';
+import { FEES_EVERY, freshness, useLive, useNow } from './live';
 import { Reveal } from './Reveal';
 import { ShareModal } from './ShareModal';
 import s from './Fees.module.css';
@@ -15,7 +15,9 @@ const solFmt = (v: number | null) => sol(v);
 export function Fees() {
   const { fees, market } = useLive();
   const [sharing, setSharing] = useState(false);
+  const now = useNow();
   const f = fees.data;
+  const state = freshness(fees, FEES_EVERY, now);
   const solUsd = market.data?.solUsd ?? null;
   const totalUsd = f && solUsd ? toSol(f.totalLamports) * solUsd : null;
 
@@ -23,9 +25,17 @@ export function Fees() {
     <section id="fees" className={s.section} aria-labelledby="fees-title">
       <div className={`wrap ${s.grid}`}>
         <Reveal className={s.main}>
-          <h2 id="fees-title" className={s.kicker}>
-            Creator fees redirected
-          </h2>
+          <div className={s.top}>
+            <h2 id="fees-title" className={s.kicker}>
+              Creator fees redirected
+            </h2>
+            {f && (
+              <p className={s.status} data-state={state} aria-live="polite">
+                {state === 'live' ? 'Live' : 'Delayed'}
+                <span>{now ? (state === 'live' ? `Updated ${ago(fees.receivedAt, now)}` : `Last read ${ago(fees.receivedAt, now)}`) : 'From Solana'}</span>
+              </p>
+            )}
+          </div>
 
           {f ? (
             <>
@@ -75,7 +85,7 @@ export function Fees() {
                 </button>
                 <p className={s.note}>
                   Pump.fun takes a creator fee on every trade. On CATANA a fee-sharing config sends all of it to one wallet. Read from
-                  Solana, refreshed every minute.
+                  Solana every 30 seconds.
                 </p>
               </div>
             </>

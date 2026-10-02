@@ -2,7 +2,7 @@
 
 import { ago, pct, price, usdCompact } from '@/lib/format';
 import { AnimatedValue } from './AnimatedValue';
-import { MARKET_EVERY, useLive, useNow } from './live';
+import { freshness, MARKET_EVERY, useLive, useNow } from './live';
 import s from './LiveStrip.module.css';
 
 export function LiveStrip() {
@@ -11,15 +11,17 @@ export function LiveStrip() {
   const m = market.data;
   const change = m?.priceChange24h ?? null;
 
-  const status = !m
-    ? market.error === 'not-found'
-      ? 'No trading pair listed yet'
-      : 'Market data unavailable, retrying'
-    : market.error === 'stale'
-      ? 'Showing last known values'
-      : now
-        ? `Updated ${ago(market.receivedAt, now)}`
-        : 'Live';
+  const state = freshness(market, MARKET_EVERY, now);
+  const status =
+    state === 'down'
+      ? market.error === 'not-found'
+        ? 'No trading pair listed yet'
+        : 'Market data unavailable, retrying'
+      : state === 'stale'
+        ? `Showing last known values${now ? ` from ${ago(market.receivedAt, now)}` : ''}`
+        : now
+          ? `Updated ${ago(market.receivedAt, now)}`
+          : 'Live';
 
   return (
     <div id="token" className={s.strip}>
@@ -35,8 +37,8 @@ export function LiveStrip() {
           <Metric label="Liquidity" value={<AnimatedValue value={m?.liquidityUsd ?? null} format={usdCompact} />} className={s.optional} />
         </dl>
         <div className={s.status}>
-          <span className={s.live} data-ok={(m && !market.error) || undefined}>
-            Live
+          <span className={s.live} data-state={state}>
+            {state === 'live' ? 'Live' : state === 'stale' ? 'Delayed' : 'Offline'}
           </span>
           <span className={s.statusText} aria-live="polite">
             {status}
@@ -49,7 +51,7 @@ export function LiveStrip() {
         </div>
       </div>
       {/* the refresh cycle, drawn as a hairline instead of a blinking dot */}
-      {m && !market.error && <span key={market.receivedAt} className={s.cycle} style={{ animationDuration: `${MARKET_EVERY}ms` }} aria-hidden />}
+      {state === 'live' && <span key={market.receivedAt} className={s.cycle} style={{ animationDuration: `${MARKET_EVERY}ms` }} aria-hidden />}
     </div>
   );
 }

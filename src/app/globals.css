@@ -269,6 +269,26 @@ img {
   }
 }
 
+/* a refreshed value that changed: tinted, then back to normal */
+[data-flash='up'] {
+  animation: flashUp 1.6s var(--ease);
+}
+[data-flash='down'] {
+  animation: flashDown 1.6s var(--ease);
+}
+@keyframes flashUp {
+  0%,
+  30% {
+    color: var(--up);
+  }
+}
+@keyframes flashDown {
+  0%,
+  30% {
+    color: var(--down);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

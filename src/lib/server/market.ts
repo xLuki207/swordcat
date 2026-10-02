@@ -63,5 +63,5 @@ async function load(): Promise<TokenMarketData | null> {
   };
 }
 
-/** 15 s: DexScreener's own cadence is about that, and the CDN sits in front. */
-export const getMarket = () => memo('market', 15_000, load);
+/** 10 s: about DexScreener's own cadence; the CDN sits in front. */
+export const getMarket = () => memo('market', 10_000, load);

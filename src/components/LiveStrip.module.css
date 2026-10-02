@@ -37,22 +37,6 @@
   line-height: 1.1;
   white-space: nowrap;
 }
-.value [data-flash='up'] {
-  animation: flashUp 1.4s var(--ease);
-}
-.value [data-flash='down'] {
-  animation: flashDown 1.4s var(--ease);
-}
-@keyframes flashUp {
-  0% {
-    color: var(--up);
-  }
-}
-@keyframes flashDown {
-  0% {
-    color: var(--down);
-  }
-}
 
 .status {
   display: grid;
@@ -70,8 +54,11 @@
   text-transform: uppercase;
   color: var(--text-faint);
 }
-.live[data-ok] {
+.live[data-state='live'] {
   color: var(--accent);
+}
+.live[data-state='stale'] {
+  color: var(--down);
 }
 
 .statusText {

@@ -132,7 +132,7 @@ function ReelFrame({ reel }: { reel: NonNullable<CreatorData['reel']> }) {
 function ArtFrame() {
   return (
     <div className={s.art}>
-      <Image src="/art/catana.webp" alt="" width={704} height={1209} sizes="320px" className={s.artImg} />
+      <Image src="/art/catana.webp" alt="" width={1408} height={2418} quality={90} sizes="320px" className={s.artImg} />
     </div>
   );
 }

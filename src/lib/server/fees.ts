@@ -147,4 +147,5 @@ async function load(): Promise<CreatorFeeData> {
   };
 }
 
-export const getFees = () => memo('fees', 45_000, load);
+/** 20 s: about five cheap RPC reads per cycle, whatever the traffic (the CDN absorbs it). */
+export const getFees = () => memo('fees', 20_000, load);

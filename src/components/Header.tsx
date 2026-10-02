@@ -3,7 +3,6 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { LINKS, SITE } from '@/lib/config';
-import { ArrowUpRight } from './icons';
 import s from './Header.module.css';
 
 const NAV = [
@@ -36,8 +35,7 @@ export function Header() {
           ))}
         </nav>
         <a className={`btn btn-sm ${s.cta}`} href={LINKS.pump} target="_blank" rel="noopener noreferrer">
-          Pump.fun
-          <ArrowUpRight size={14} className="nudge" />
+          Open Pump.fun
         </a>
       </div>
     </header>

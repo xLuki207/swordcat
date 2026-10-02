@@ -4,6 +4,7 @@ import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   agentRules: false,
+  images: { qualities: [75, 90], formats: ['image/avif', 'image/webp'] },
   turbopack: { root: path.resolve(__dirname) },
   outputFileTracingRoot: path.resolve(__dirname),
   // The share card reads its fonts and the cat cutout from disk at runtime.

@@ -9,9 +9,24 @@
 import sharp from 'sharp';
 
 const MASTER = 'ref/catana-cutout-master.png';
+// The cutout's region of the token image at 2x: Real-ESRGAN x4 (downscaled)
+// blended 70/30 with a Lanczos upscale of the original, so the eyes and the
+// tsuba get crisp without the fur turning painterly. Same pixels, same cat.
+const DETAIL = 'ref/catana-detail-2x.jpg';
+
+const { width: W, height: H } = await sharp(DETAIL).metadata();
+const alpha = await sharp(MASTER).ensureAlpha().extractChannel(3).resize(W, H, { kernel: 'lanczos3' }).raw().toBuffer();
+const rgb = await sharp(DETAIL).removeAlpha().raw().toBuffer();
+const data = Buffer.alloc(W * H * 4);
+for (let p = 0; p < W * H; p++) {
+  data[p * 4] = rgb[p * 3];
+  data[p * 4 + 1] = rgb[p * 3 + 1];
+  data[p * 4 + 2] = rgb[p * 3 + 2];
+  data[p * 4 + 3] = alpha[p];
+}
+const info = { width: W, height: H };
 
 // Tighten the alpha edge a little: the model leaves a soft pavement-grey halo.
-const { data, info } = await sharp(MASTER).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
 for (let i = 3; i < data.length; i += 4) {
   const a = data[i];
   const na = Math.max(0, Math.min(255, Math.round(((a - 28) * 255) / 215)));
@@ -19,7 +34,7 @@ for (let i = 3; i < data.length; i += 4) {
   // Defringe: half-transparent edge pixels still carry pavement grey, which
   // reads as a light halo on a dark page. Pull them toward black.
   if (na < 250) {
-    const k = Math.pow(na / 255, 0.7);
+    const k = Math.pow(na / 255, 0.35);
     data[i - 3] *= k;
     data[i - 2] *= k;
     data[i - 1] *= k;
@@ -28,8 +43,10 @@ for (let i = 3; i < data.length; i += 4) {
 const cut = sharp(data, { raw: { width: info.width, height: info.height, channels: 4 } });
 const png = await cut.png().toBuffer();
 
-await sharp(png).webp({ quality: 90, alphaQuality: 95, effort: 6 }).toFile('public/art/catana.webp');
-await sharp(png).png({ compressionLevel: 9 }).toFile('public/art/catana.png');
+// 2x master for the page (next/image derives smaller widths from it)
+await sharp(png).webp({ quality: 90, alphaQuality: 100, effort: 6, smartSubsample: true }).toFile('public/art/catana.webp');
+// 1x PNG for the server-drawn share card
+await sharp(png).resize(704, 1209, { kernel: 'lanczos3' }).png({ compressionLevel: 9 }).toFile('public/art/catana.png');
 
 // Backdrop: the right third of the token's own DexScreener banner (mountain,
 // torii, blossoms), without the illustrated cat. Used dark and soft behind the hero.
@@ -40,7 +57,7 @@ await sharp('ref/dexscreener-banner.jpg')
   .toFile('public/art/backdrop.webp');
 
 // Face crop for the header mark and the favicons.
-const face = { left: 125, top: 205, width: 430, height: 430 };
+const face = { left: 250, top: 410, width: 860, height: 860 };
 const round = (s) =>
   Buffer.from(`<svg width="${s}" height="${s}"><circle cx="${s / 2}" cy="${s / 2}" r="${s / 2}" fill="#fff"/></svg>`);
 async function mark(size, out, bg = '#15100b') {

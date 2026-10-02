@@ -11,7 +11,7 @@ const description = 'CATANA is the Sword Cat coin on Solana. 100% of its Pump.fu
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
-  title: `${SITE.name} — ${SITE.meme}`,
+  title: SITE.name,
   description,
   applicationName: SITE.name,
   alternates: { canonical: '/' },

@@ -122,3 +122,6 @@
   flex: none;
   padding-right: 1px;
 }
+.state:empty {
+  display: none;
+}
