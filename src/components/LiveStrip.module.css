@@ -1,0 +1,137 @@
+.strip {
+  position: relative;
+  border-top: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(11, 8, 6, 0.35), rgba(11, 8, 6, 0.85));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  min-height: 104px;
+}
+
+.metrics {
+  display: flex;
+  margin: 0;
+}
+
+.metric {
+  padding: 0 clamp(18px, 2.6vw, 40px);
+  border-left: 1px solid var(--border);
+}
+.metric:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.metric dd {
+  margin: 8px 0 0;
+}
+
+.value {
+  font-size: clamp(19px, 1.75vw, 25px);
+  line-height: 1.1;
+  white-space: nowrap;
+}
+.value [data-flash='up'] {
+  animation: flashUp 1.4s var(--ease);
+}
+.value [data-flash='down'] {
+  animation: flashDown 1.4s var(--ease);
+}
+@keyframes flashUp {
+  0% {
+    color: var(--up);
+  }
+}
+@keyframes flashDown {
+  0% {
+    color: var(--down);
+  }
+}
+
+.status {
+  display: grid;
+  justify-items: end;
+  gap: 4px;
+  text-align: right;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.live {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.live[data-ok] {
+  color: var(--accent);
+}
+
+.statusText {
+  font-variant-numeric: tabular-nums;
+}
+
+.source {
+  font-size: 12.5px;
+  color: var(--text-faint);
+}
+
+.cycle {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -1px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(231, 189, 118, 0.7));
+  transform-origin: left;
+  animation: refresh linear forwards;
+}
+
+@media (max-width: 1180px) {
+  .optional {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding-top: 20px;
+    padding-bottom: 18px;
+  }
+  .metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 18px;
+  }
+  .metric,
+  .metric:first-child {
+    padding: 0 0 0 16px;
+    border-left: 1px solid var(--border);
+  }
+  .optional {
+    display: block;
+  }
+  .status {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    grid-template-columns: auto 1fr;
+    justify-items: start;
+    align-items: baseline;
+    column-gap: 12px;
+    text-align: left;
+  }
+  .source {
+    grid-column: 1 / -1;
+  }
+}

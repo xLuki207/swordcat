@@ -1,0 +1,40 @@
+{
+  "recipient": "rqH92fLaaBesxLDyosNvLNRTcU12yZ1FnEg1vUGN1gi",
+  "lastSignature": "4DTb1BBvff25oaog1T12176y4E2PdiKA4Nec7rHjab5RQvyj3cuYKdg8v7W73FLSo4sQZSpA1wzgD5N1GTcSv9hg",
+  "paidLamports": 40931621811,
+  "payoutCount": 33,
+  "recent": [
+    {
+      "signature": "4DTb1BBvff25oaog1T12176y4E2PdiKA4Nec7rHjab5RQvyj3cuYKdg8v7W73FLSo4sQZSpA1wzgD5N1GTcSv9hg",
+      "time": 1790942141000,
+      "lamports": 78167449
+    },
+    {
+      "signature": "4QZJf61xT5NrLd7wyEZVqHPGjEniiUnydjJasc7K9mZhCvd2mshwaZgBdPe6Vb6xjHk6hoi9uqrnjFDGuXCCdsrw",
+      "time": 1790933036000,
+      "lamports": 549738154
+    },
+    {
+      "signature": "5xG3mf4M482LeK1cbyHRk9QBc5QujxjQJSm4v2CUqvgRy9ihWSaSH2j7ofnpf1n6Vp9hycSKZmdCtFkZ4uXs2FM5",
+      "time": 1790904288000,
+      "lamports": 55928131
+    },
+    {
+      "signature": "4V7csBYJcNWMVdNqmeWrP5EbLP5voBGv8SsupKKXFFKXzmRANm4VGUsjuELMrHx68iwgrdgmknGoKitp63Daoiei",
+      "time": 1790903238000,
+      "lamports": 64870118
+    },
+    {
+      "signature": "37XH787wZjb4Nr6ofUa6DA7nUQTKmwFAM1NNXsgC3owNxmJfULnPG45tSPLG7hKi3RFVEnPzWCD58UnsYyZCid2k",
+      "time": 1790901598000,
+      "lamports": 224560270
+    },
+    {
+      "signature": "2Z1KH6LjDfmcEL5ExTtcRh4V1dBDn1unFVZ2dBNSgY2PewyPuqYLD3aqt8VqM4WAQveZeBQJLt2xwYAWvcVcSkEr",
+      "time": 1790898559000,
+      "lamports": 77053815
+    }
+  ],
+  "configCreatedAt": 1790862189000,
+  "computedAt": 1790949088388
+}

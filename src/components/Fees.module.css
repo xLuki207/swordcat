@@ -1,0 +1,188 @@
+.section {
+  position: relative;
+  padding: clamp(96px, 12vw, 168px) 0 clamp(80px, 10vw, 140px);
+}
+.section::before {
+  /* a single warm pool of light behind the number */
+  content: '';
+  position: absolute;
+  left: -10vw;
+  top: 4%;
+  width: 70vw;
+  height: 70%;
+  background: radial-gradient(closest-side, rgba(240, 196, 122, 0.07), transparent);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
+  gap: clamp(48px, 7vw, 120px);
+  align-items: start;
+}
+
+.kicker {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+.figure {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0 0.22em;
+  margin: 14px 0 0;
+  line-height: 0.9;
+}
+.amount {
+  font-size: clamp(84px, 12.5vw, 196px);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+.unit {
+  font-size: clamp(32px, 4vw, 64px);
+  color: var(--accent);
+}
+
+.usd {
+  margin: 18px 0 0;
+  font-size: clamp(16px, 1.4vw, 19px);
+  color: var(--text-muted);
+}
+.usd .num {
+  color: var(--text);
+}
+
+.ledger {
+  margin: 48px 0 0;
+  max-width: 640px;
+  border-top: 1px solid var(--border);
+}
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+.row dt {
+  display: grid;
+  gap: 3px;
+  font-size: 15px;
+}
+.row dt span {
+  font-size: 13px;
+  color: var(--text-faint);
+}
+.row dd {
+  margin: 0;
+  font-size: 15px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-top: 36px;
+  max-width: 640px;
+}
+.note {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--text-faint);
+  max-width: 46ch;
+}
+
+.empty {
+  display: grid;
+  gap: 14px;
+  margin-top: 28px;
+  max-width: 520px;
+}
+.emptyTitle {
+  margin: 0;
+  font-family: var(--font-display), serif;
+  font-weight: 800;
+  font-size: 34px;
+  line-height: 1.15;
+}
+
+/* ---------- payouts timeline ---------- */
+
+.side {
+  padding-top: 6px;
+}
+.sideTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 0 0 14px;
+  font-size: 15px;
+  font-weight: 500;
+}
+.sideTitle span {
+  font-size: 12.5px;
+  font-weight: 400;
+  color: var(--text-faint);
+}
+
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--border);
+}
+.event {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 16px;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--border);
+  transition: background-color 0.2s;
+}
+.event:hover {
+  background: linear-gradient(90deg, transparent, var(--surface-soft), transparent);
+}
+.when {
+  font-size: 12.5px;
+  color: var(--text-faint);
+}
+.amt {
+  font-size: 15px;
+  text-align: right;
+}
+.what {
+  grid-column: 1 / -1;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13.5px;
+  color: var(--text-muted);
+}
+.event:hover .what {
+  color: var(--text);
+}
+
+@media (max-width: 960px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 18px;
+  }
+  .row {
+    align-items: flex-start;
+  }
+}

@@ -1,0 +1,124 @@
+.mint {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 100%;
+  min-height: 44px;
+  padding: 0 8px 0 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(11, 8, 6, 0.5);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  text-align: left;
+  transition:
+    border-color 0.25s var(--ease),
+    background-color 0.25s var(--ease);
+}
+.mint:hover {
+  border-color: var(--border-strong);
+  background: rgba(20, 15, 11, 0.7);
+}
+
+.tag {
+  flex: none;
+  font-size: 11.5px;
+  color: var(--text-faint);
+  padding-right: 12px;
+  border-right: 1px solid var(--border);
+  line-height: 20px;
+}
+
+.addr {
+  display: flex;
+  min-width: 0;
+  font-size: 13px;
+  color: var(--text-muted);
+  transition: color 0.2s;
+}
+.mint:hover .addr {
+  color: var(--text);
+}
+.head {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.icon {
+  position: relative;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  color: var(--text-muted);
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+.mint:hover .icon {
+  background: var(--surface-soft);
+  color: var(--text);
+}
+.icon > span {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  transition:
+    transform 0.35s var(--ease),
+    opacity 0.25s;
+}
+.checkIc {
+  opacity: 0;
+  transform: scale(0.4) rotate(-30deg);
+  color: var(--accent);
+}
+.mint[data-copied] .copyIc {
+  opacity: 0;
+  transform: scale(0.4) rotate(30deg);
+}
+.mint[data-copied] .checkIc {
+  opacity: 1;
+  transform: none;
+}
+.mint[data-copied] {
+  border-color: rgba(231, 189, 118, 0.4);
+}
+
+.state {
+  position: absolute;
+  right: -4px;
+  top: 50%;
+  transform: translate(100%, -50%);
+  padding-left: 10px;
+  font-size: 12.5px;
+  color: var(--accent);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.compact {
+  min-height: 38px;
+}
+.compact .addr {
+  font-size: 12.5px;
+}
+
+@media (max-width: 640px) {
+  .state {
+    right: 46px;
+    transform: translateY(-50%);
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: var(--bg-raise);
+  }
+}
+
+.addr > span:last-child {
+  flex: none;
+  padding-right: 1px;
+}
